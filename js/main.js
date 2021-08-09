@@ -16,8 +16,6 @@ searchInputEl.addEventListener('blur', function () {
     searchInputEl.setAttribute('placeholder', '');
 })
 
-
-
 // 배지 애니메이션
 const badgeEl = document.querySelector('header .badges');
 window.addEventListener('scroll', _.throttle(function () {
@@ -26,15 +24,35 @@ window.addEventListener('scroll', _.throttle(function () {
         gsap.to(badgeEl, .6, {
             opacity: 0,
             display: 'none'
-        })
+        });
+        // 버튼 보이기
+        gsap.to(toTopEl, .2, {
+            x: 0
+        });
+
     } else {
         // 배지 보이기
         gsap.to(badgeEl, .6, {
             opacity: 1,
             display: 'block'
-        })
+        });
+        //버튼 숨기기
+        gsap.to(toTopEl, .2, {
+            x: 100
+        });
     }
 }, 300));
+
+
+
+// 페이지 상단으로 이동
+const toTopEl = document.querySelector('#to-top');
+toTopEl.addEventListener('click', function () {
+    gsap.to(window, .7, {
+        scrollTo: 0,
+        ease: Power1.easeInOut
+    })
+});
 
 
 
@@ -144,3 +162,9 @@ spyEls.forEach(function (spyEl) {
         .setClassToggle(spyEl, 'show')
         .addTo(new ScrollMagic.Controller());
 })
+
+
+
+// 연도 자동 계산
+const thisYear = document.querySelector('.this-year');
+thisYear.textContent = new Date().getFullYear();
